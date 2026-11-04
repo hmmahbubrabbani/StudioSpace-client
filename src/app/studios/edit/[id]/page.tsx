@@ -4,7 +4,7 @@ import React, { useState, useEffect, Suspense } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Save, Loader2 } from "lucide-react";
-import { toast } from "sonner"; // 🔥 sonner থেকে toast ইম্পোর্ট করা হলো
+import { toast } from "sonner"; 
 import { authClient } from "@/lib/auth-client";
 import { Studio } from "@/types";
 
@@ -16,7 +16,7 @@ const CATEGORIES: Studio["category"][] = [
   "Workshop",
 ];
 
-// আসল ফর্ম কম্পোনেন্ট যেখানে useParams ব্যবহার করা হয়েছে
+
 function EditStudioForm() {
   const params = useParams();
   const router = useRouter();
@@ -25,7 +25,7 @@ function EditStudioForm() {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
 
-  // ফর্ম ডাটা স্টেট
+
   const [formData, setFormData] = useState({
     title: "",
     category: "Photo Studio" as Studio["category"],
@@ -42,7 +42,7 @@ function EditStudioForm() {
   useEffect(() => {
     if (!studioId) return;
 
-    const fetchStudio = async () => {
+    const fetchStudio = async () =>{
       try {
         setLoading(true);
         const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
@@ -112,7 +112,7 @@ function EditStudioForm() {
         maxCapacity: Number(formData.maxCapacity),
       };
 
-      const res = await fetch(`${baseUrl}/studios/${studioId}`, {
+      const res = await fetch(`${baseUrl}/studios/${studioId}`,{
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -195,7 +195,7 @@ function EditStudioForm() {
                 required
                 className="w-full px-4 py-3 bg-background border border-border rounded-xl text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 text-sm"
               >
-                {CATEGORIES.map((cat) => (
+                {CATEGORIES.map((cat) =>(
                   <option key={cat} value={cat}>
                     {cat}
                   </option>
@@ -329,7 +329,7 @@ function EditStudioForm() {
 }
 
 // মূল পেজ এক্সপোর্ট যা Suspense দিয়ে মোড়ানো
-export default function EditStudioPage() {
+export default function EditStudioPage(){
   return (
     <Suspense
       fallback={
