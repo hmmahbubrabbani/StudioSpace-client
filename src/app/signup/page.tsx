@@ -7,7 +7,7 @@ import { Loader2, Camera } from "lucide-react";
 import { toast } from "sonner"; // 🔥 sonner থেকে toast ইম্পোর্ট করা হলো
 import { authClient } from "@/lib/auth-client";
 
-export default function SignUpPage() {
+export default function SignUpPage(){
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [passwordError, setPasswordError] = useState("");
@@ -19,21 +19,21 @@ export default function SignUpPage() {
     image: "",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>{
     const { name, value } = e.target;
     setFormData((prev) => ({ 
       ...prev, 
       [name]: name === "email" ? value.toLowerCase() : value 
     }));
 
-    // পাসওয়ার্ড টাইপ করার সময় রিয়েল-টাইম ভ্যালিডেশন চেক করা
+    
     if (name === "password") {
       validatePassword(value);
     }
   };
 
-  // পাসওয়ার্ড ভ্যালিডেশন ফাংশন
-  const validatePassword = (pass: string) => {
+ 
+  const validatePassword = (pass: string) =>{
     const hasUppercase = /[A-Z]/.test(pass);
     const hasLowercase = /[a-z]/.test(pass);
     const isValidLength = pass.length >= 6;
@@ -51,15 +51,15 @@ export default function SignUpPage() {
       return false;
     }
 
-    setPasswordError(""); // সব ঠিক থাকলে এরর ক্লিয়ার হবে
+    setPasswordError(""); 
     return true;
   };
 
   const handleEmailSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // সাবমিট করার আগে পাসওয়ার্ড ভ্যালিডেশন ফাইনাল চেক
-    if (!validatePassword(formData.password)) {
+   
+    if (!validatePassword(formData.password)){
       toast.error("Invalid Password", {
         description: passwordError || "Please check your password requirements.",
       });
@@ -84,7 +84,7 @@ export default function SignUpPage() {
         description: "Registration successful. Please log in with your credentials.",
       });
 
-      // শর্ত অনুযায়ী সফল রেজিস্ট্রেশনের পর লগইন পেজে রিডাইরেক্ট করা হলো
+     
       router.push("/signin");
       router.refresh();
     } catch (err: any) {
@@ -97,12 +97,12 @@ export default function SignUpPage() {
     }
   };
 
-  // Google Social Login হ্যান্ডলার
+  // Google Social Login 
   const handleGoogleSignIn = async () => {
     try {
       await authClient.signIn.social({
         provider: "google",
-        callbackURL: "/", // গুগল লগইনের পর সরাসরি হোমপেজে যাবে
+        callbackURL: "/", 
       });
     } catch (err) {
       console.error("Google signin error:", err);
@@ -202,7 +202,7 @@ export default function SignUpPage() {
               placeholder="••••••••"
               className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-primary transition-all"
             />
-            {/* পাসওয়ার্ড ভ্যালিডেশন এরর মেসেজ ফর্মে শো করার জন্য */}
+            
             {passwordError && (
               <p className="text-xs text-rose-500 mt-1">{passwordError}</p>
             )}
@@ -213,7 +213,7 @@ export default function SignUpPage() {
             disabled={loading || !!passwordError}
             className="w-full py-3.5 bg-primary text-primary-foreground font-semibold rounded-xl shadow-lg hover:bg-primary/90 transition-all text-sm flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer mt-2"
           >
-            {loading && <Loader2 className="w-4 h-4 animate-spin" />}
+            {loading && <Loader2 className="w-4 h-4 animate-spin"/>}
             {loading ? "Creating Account..." : "Register"}
           </button>
 
