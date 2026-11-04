@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# StudioSpace - P2P Creative Studio Marketplace
 
-## Getting Started
+**StudioSpace** is a modern Peer-to-Peer (P2P) marketplace web application designed for creators, photographers, videographers, and producers to discover, book, and manage professional creative studio workspaces seamlessly.
 
-First, run the development server:
+* **Live site URL: 
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🌟 Key Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+* **Advanced Studio Discovery & Filtering:** Browse a wide range of creative studios with real-time category filtering, location search, and detailed pricing views.
+* **Interactive Wishlist/Favorites System:** Authenticated users can easily save or remove studios from their personal wishlist using instant toggle actions with heart animations.
+* **Double-Booking Prevention & Booking Management:** Robust reservation system that prevents overlapping bookings, allows cancellations, and tracks status (`Confirmed`, `Pending`, `Cancelled`).
+* **Dynamic Professional Invoice Generator:** Users can instantly generate, preview, and print/download professional-grade booking invoices directly from their reservation history.
+* **Secure Authentication (Better Auth):** Implements modern EdDSA-based JWT token verification with email/password login, account registration, profile management, and Google Social sign-in.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🛠️ Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+* **Frontend Framework:** Next.js 16+ (App Router, Turbopack, React Server & Client Components)
+* **UI Library & Components:** Shadcn UI / Base UI variant, Tailwind CSS v4, Lucide React Icons
+* **Notifications & Feedback:** Sonner (Toast notifications), Custom AlertDialog modals
+* **Backend Integration:** Node.js, Express.js, Native MongoDB Node Driver
+* **Authentication Provider:** Better Auth (`@better-auth`)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🚀 Local Setup & Installation
 
-## Deploy on Vercel
+Follow these steps to run the client-side application locally on your machine:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. **Clone the Repository:**
+   ```bash
+   git clone [https://github.com/your-username/StudioSpace-client.git](https://github.com/your-username/StudioSpace-client.git)
+   cd StudioSpace-client
