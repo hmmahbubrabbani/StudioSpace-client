@@ -21,23 +21,19 @@ import { toast } from "sonner";
 import { Booking } from "@/types";
 import { authClient } from "@/lib/auth-client";
 
-export default function DashboardPage() {
+export default function DashboardPage(){
   const router = useRouter();
-  
-  // Better Auth থেকে রিয়েল-টাইম সেশন ফেচ করা
   const { data: session, isPending: sessionLoading, refetch } = authClient.useSession();
   const user = session?.user;
 
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
-
-  // Edit Profile Modal States
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [updating, setUpdating] = useState(false);
 
-  // সেশনের ডাটা লোড হলে লোকাল স্টেটে সেট করা
+  
   useEffect(() => {
     if (user) {
       setName(user.name || "");
@@ -45,11 +41,11 @@ export default function DashboardPage() {
     }
   }, [user]);
 
-  // Fetch user's bookings from backend with Authorization Token
+ 
   useEffect(() => {
     if (!user?.email) return;
 
-    const fetchUserBookings = async () => {
+    const fetchUserBookings = async () =>{
       try {
         setLoading(true);
 
@@ -58,7 +54,7 @@ export default function DashboardPage() {
 
         const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
         
-        const res = await fetch(`${baseUrl}/bookings?creatorEmail=${user.email}`, {
+        const res = await fetch(`${baseUrl}/bookings?creatorEmail=${user.email}`,{
           headers: {
             "Authorization": `Bearer ${token}`
           }
@@ -81,8 +77,8 @@ export default function DashboardPage() {
     fetchUserBookings();
   }, [user?.email]);
 
-  // Profile Update Handler
-  const handleUpdateProfile = async (e: React.FormEvent) => {
+ 
+  const handleUpdateProfile = async (e: React.FormEvent) =>{
     e.preventDefault();
     setUpdating(true);
 
@@ -113,7 +109,7 @@ export default function DashboardPage() {
     }
   };
 
-  // Logout Handler
+
   const handleLogout = async () => {
     await authClient.signOut({
       fetchOptions: {
@@ -128,7 +124,7 @@ export default function DashboardPage() {
     });
   };
 
-  if (sessionLoading) {
+  if (sessionLoading){
     return (
       <div className="min-h-[70vh] flex flex-col items-center justify-center space-y-4 text-neutral-900 bg-background">
         <Loader2 className="w-10 h-10 text-primary animate-spin" />
@@ -137,7 +133,7 @@ export default function DashboardPage() {
     );
   }
 
-  if (!user) {
+  if (!user){
     return (
       <div className="max-w-7xl mx-auto px-4 py-24 text-center space-y-6 text-neutral-900 bg-background">
         <h2 className="text-2xl font-bold">Access Denied</h2>
