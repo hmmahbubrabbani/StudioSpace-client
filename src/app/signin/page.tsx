@@ -40,7 +40,7 @@ export default function SignInPage() {
         throw new Error(error.message || "Invalid email or password");
       }
 
-      toast.success("Welcome Back! 👋", {
+      toast.success("Welcome Back! ", {
         description: "Successfully signed in to StudioSpace.",
       });
 
@@ -56,7 +56,7 @@ export default function SignInPage() {
     }
   };
 
-  // Google Social Sign-In হ্যান্ডলার
+  // Google Social Sign-In 
   const handleGoogleSignIn = async () => {
     setGoogleLoading(true);
     try {
@@ -86,7 +86,7 @@ export default function SignInPage() {
           <p className="text-xs text-neutral-400">Sign in to manage your studio workspaces and bookings</p>
         </div>
 
-        {/* Google Social Login Button */}
+       
         <button
           type="button"
           onClick={handleGoogleSignIn}
@@ -121,8 +121,8 @@ export default function SignInPage() {
               type="email"
               name="email"
               required
-              readOnly // 🔥 ব্রাউজার অটোফিল ব্লক করার জন্য ইনিটালি readOnly রাখা হলো
-              onFocus={(e) => e.target.removeAttribute('readOnly')} // ইউজার ক্লিক করার সাথে সাথে readOnly রিমুভ হয়ে যাবে
+              readOnly 
+              onFocus={(e) => e.target.removeAttribute('readOnly')} 
               value={formData.email}
               onChange={handleChange}
               placeholder="Example@gmail.com"
@@ -139,7 +139,7 @@ export default function SignInPage() {
               type="password"
               name="password"
               required
-              readOnly // 🔥 পাসওয়ার্ডের ক্ষেত্রেও একই টেকনিক প্রয়োগ করা হলো
+              readOnly 
               onFocus={(e) => e.target.removeAttribute('readOnly')}
               value={formData.password}
               onChange={handleChange}
