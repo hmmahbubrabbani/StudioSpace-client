@@ -18,7 +18,7 @@ import {
 } from "lucide-react";
 import { Studio } from "@/types";
 
-function StudiosContent() {
+function StudiosContent(){
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get("category");
 
@@ -28,11 +28,11 @@ function StudiosContent() {
   const [selectedCategory, setSelectedCategory] = useState(categoryParam || "All");
   const [priceSort, setPriceSort] = useState<"asc" | "desc" | null>(null);
 
-  // Pagination states
+ 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6; // Per page limit 6
 
-  // Sync category state if URL parameter changes
+  
   useEffect(() => {
     if (categoryParam) {
       setSelectedCategory(categoryParam);
@@ -40,7 +40,7 @@ function StudiosContent() {
     }
   }, [categoryParam]);
 
-  // Fetch studios from Express backend API
+  
   useEffect(() => {
     const fetchStudios = async () => {
       try {
@@ -61,8 +61,8 @@ function StudiosContent() {
 
   const categories = ["All", "Photo Studio", "Film Stage", "Podcast Lounge", "Music Suite", "Workshop"];
 
-  // Filter logic based on Search and Category
-  const filteredStudios = studios.filter((studio) => {
+  
+  const filteredStudios = studios.filter((studio) =>{
     const matchesSearch = 
       studio.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       studio.location.toLowerCase().includes(searchTerm.toLowerCase());
@@ -72,19 +72,19 @@ function StudiosContent() {
     return matchesSearch && matchesCategory;
   });
 
-  // Sorting logic based on Price Up (asc) or Price Down (desc)
+  
   const sortedStudios = [...filteredStudios].sort((a, b) => {
     if (priceSort === "asc") return a.hourlyRate - b.hourlyRate;
     if (priceSort === "desc") return b.hourlyRate - a.hourlyRate;
     return 0;
   });
 
-  // Reset pagination when filter, search, or sort changes
-  useEffect(() => {
+  
+  useEffect(() =>{
     setCurrentPage(1);
   }, [searchTerm, selectedCategory, priceSort]);
 
-  // Pagination slicing logic
+  
   const totalPages = Math.ceil(sortedStudios.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentStudios = sortedStudios.slice(startIndex, startIndex + itemsPerPage);
