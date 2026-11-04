@@ -8,14 +8,14 @@ import {
   Building2,
   Loader2 
 } from "lucide-react";
-import { toast } from "sonner"; // 🔥 sonner থেকে toast ইম্পোর্ট করা হলো
+import { toast } from "sonner"; 
 import { Studio } from "@/types";
 import StudioListingCard from "@/components/studio/StudioListingCard";
-import { authClient } from "@/lib/auth-client"; // Better Auth client ইম্পোর্ট
+import { authClient } from "@/lib/auth-client"; 
 
-export default function MyListingsPage() {
+export default function MyListingsPage(){
 
-  // Better Auth থেকে রিয়েল-টাইম সেশন ফেচ করা
+  
   const { data: session, isPending: sessionLoading } = authClient.useSession();
   const user = session?.user;
 
@@ -23,16 +23,16 @@ export default function MyListingsPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // ইউজার লগইন না করা থাকলে ফেচ করার প্রয়োজন নেই
-    if (!user?.email) {
+   
+    if (!user?.email){
       setLoading(false);
       return;
     }
 
-    const fetchMyListings = async () => {
+    const fetchMyListings = async () =>{
       try {
         setLoading(true);
-        // রিয়েল ইউজারের ইমেইল ডায়নামিকালি কুয়েরি প্যারাম হিসেবে পাঠানো হচ্ছে
+       
         const res = await fetch(`http://localhost:8000/studios?hostEmail=${user.email}`);
         if (!res.ok) throw new Error("Failed to fetch listings");
         const data = await res.json();
@@ -50,7 +50,7 @@ export default function MyListingsPage() {
     fetchMyListings();
   }, [user?.email]);
 
-  // সেশন লোড হওয়ার সময় লোডিং স্পিনার দেখানো
+ 
   if (sessionLoading) {
     return (
       <div className="flex flex-col items-center justify-center py-28 space-y-4 text-white">
@@ -60,7 +60,7 @@ export default function MyListingsPage() {
     );
   }
 
-  // ইউজার লগইন করা না থাকলে সাইনইন করার নোটিশ বা প্রম্পট দেখানো
+  
   if (!user) {
     return (
       <div className="bg-card border border-border rounded-3xl p-16 text-center space-y-6 max-w-lg mx-auto my-20 shadow-sm text-white">
@@ -108,24 +108,24 @@ export default function MyListingsPage() {
         </Link>
       </div>
 
-      {/* Loading State */}
+     
       {loading ? (
         <div className="flex flex-col items-center justify-center py-24 space-y-4">
           <Loader2 className="w-10 h-10 text-primary animate-spin" />
           <p className="text-sm text-muted-foreground">Loading your studio listings...</p>
         </div>
       ) : listings.length > 0 ? (
-        /* Listings Grid */
+       
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {listings.map((studio) => (
+          {listings.map((studio) =>(
             <StudioListingCard 
               key={studio._id} 
               studio={studio} 
-              onDeleteSuccess={(id) => {
+              onDeleteSuccess={(id) =>{
                 setListings((prev) => prev.filter((item) => item._id !== id));
               }}
               onUpdateSuccess={(updatedStudio) => {
-                // স্টুডিও এডিট সফল হলে লিস্টের স্টেট ইনস্ট্যান্ট আপডেট করা হবে
+              
                 setListings((prev) => 
                   prev.map((item) => item._id === updatedStudio._id ? updatedStudio : item)
                 );
@@ -134,7 +134,7 @@ export default function MyListingsPage() {
           ))}
         </div>
       ) : (
-        /* Empty State */
+       
         <div className="bg-card border border-border rounded-3xl p-16 text-center space-y-6 max-w-lg mx-auto shadow-sm">
           <div className="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mx-auto">
             <Building2 className="w-8 h-8" />
