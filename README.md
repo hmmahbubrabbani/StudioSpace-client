@@ -32,5 +32,5 @@ Follow these steps to run the client-side application locally on your machine:
 
 1. **Clone the Repository:**
    ```bash
-   git clone 
+   git clone https://github.com/hmmahbubrabbani/StudioSpace-client
    cd StudioSpace-client
