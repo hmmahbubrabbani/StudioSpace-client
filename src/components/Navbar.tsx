@@ -16,9 +16,9 @@ import {
   UserPlus 
 } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
-import { ThemeToggle } from "@/components/ThemeToggle"; // 🔥 থিম টগল কম্পোনেন্ট ইম্পোর্ট
+import { ThemeToggle } from "@/components/ThemeToggle"; 
 
-export default function Navbar() {
+export default function Navbar(){
   const pathname = usePathname();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
@@ -26,13 +26,13 @@ export default function Navbar() {
   const [activeHash, setActiveHash] = useState("");
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Better Auth থেকে রিয়েল-টাইম সেশন ফেচ করা
+ 
   const { data: session, isPending } = authClient.useSession();
   const user = session?.user;
 
   useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+    function handleClickOutside(event: MouseEvent){
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)){
         setDropdownOpen(false);
       }
     }
@@ -40,9 +40,9 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Track hash changes on click for smooth navigation state
+  
   useEffect(() => {
-    const handleHashChange = () => {
+    const handleHashChange = () =>{
       setActiveHash(window.location.hash);
     };
 
