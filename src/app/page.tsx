@@ -5,7 +5,7 @@ import HowBookingWorks from "@/components/home/HowBookingWorks";
 import HostGuarantee from "@/components/home/HostGuarantee";
 import CallToAction from "@/components/home/CallToAction";
 
-export default function Home() {
+export default function Home(){
   return (
     <>
       <Banner />

@@ -10,11 +10,11 @@ export default function FeaturedStudios() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchFeatured = async () => {
+    const fetchFeatured = async () =>{
       try {
         setLoading(true);
         
-        // এনভায়রনমেন্ট ভেরিয়েবল ব্যবহার করা হয়েছে (ফলব্যাক হিসেবে লোকালহোস্ট রাখা হয়েছে)
+       
         const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
         const res = await fetch(`${baseUrl}/studios`);
         
@@ -22,8 +22,8 @@ export default function FeaturedStudios() {
         
         const data = await res.json();
         
-        // ডাটা অ্যারে কি না তা নিশ্চিত করে প্রথম ৬টি আইটেম সেট করা হচ্ছে
-        if (Array.isArray(data)) {
+        
+        if (Array.isArray(data)){
           setFeaturedStudios(data.slice(0, 6));
         } else {
           setFeaturedStudios([]);
