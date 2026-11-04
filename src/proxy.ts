@@ -24,6 +24,7 @@ export const config = {
       '/studios/add',     // নতুন স্টুডিও অ্যাড করার পেজ (আপনার সঠিক পাথ অনুযায়ী)
       '/studios/edit/:path*', // স্টুডিও এডিট করার পেজ
       '/my-bookings',     // বুকিং পেজ
-      '/my-listings'      // হোস্টের লিস্টিং পেজ
+      '/my-listings',
+      '/studios'      // হোস্টের লিস্টিং পেজ
    ],
 };

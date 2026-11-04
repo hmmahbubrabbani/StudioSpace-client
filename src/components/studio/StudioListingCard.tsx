@@ -31,6 +31,7 @@ import {
 interface StudioListingCardProps {
   studio: Studio;
   onDeleteSuccess: (id: string) => void;
+  onUpdateSuccess?: (updatedStudio: Studio) => void;
   initialIsFavorite?: boolean;
 }
 
@@ -46,6 +47,8 @@ export default function StudioListingCard({
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [wishlistLoading, setWishlistLoading] = useState(false);
+  
+  // 🔥 প্রপস থেকে আসা initialIsFavorite-কে লোকাল স্টেটের সাথে পারফেক্টলি সিঙ্ক করা
   const [isFavorite, setIsFavorite] = useState(initialIsFavorite);
 
   const [currentStudio, setCurrentStudio] = useState<Studio>(studio);
@@ -53,6 +56,11 @@ export default function StudioListingCard({
   useEffect(() => {
     setCurrentStudio(studio);
   }, [studio]);
+
+  // প্রপস পরিবর্তন হলে ফেভারিট স্টেট আপডেট করা
+  useEffect(() => {
+    setIsFavorite(initialIsFavorite);
+  }, [initialIsFavorite]);
 
   const handleToggleWishlist = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -69,7 +77,7 @@ export default function StudioListingCard({
       const { data: tokenData } = await authClient.token();
       const token = tokenData?.token;
 
-      const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
+      const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
       
       const res = await fetch(`${baseUrl}/wishlist/toggle`, {
         method: "POST",
@@ -87,7 +95,8 @@ export default function StudioListingCard({
 
       const data = await res.json();
 
-      if (data.action === "added") {
+      
+      if (data.action === "added" || data.success && data.action === "added") {
         setIsFavorite(true);
         toast.success("Added to Wishlist ❤️", {
           description: `${currentStudio.title} has been saved to your favorites.`,
@@ -98,7 +107,7 @@ export default function StudioListingCard({
           description: `${currentStudio.title} has been removed from your favorites.`,
         });
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Wishlist error:", error);
       toast.error("Error", {
         description: "Could not update wishlist. Please try again.",
@@ -117,7 +126,7 @@ export default function StudioListingCard({
       const { data: tokenData } = await authClient.token();
       const token = tokenData?.token;
 
-      const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
+      const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
       
       const res = await fetch(`${baseUrl}/studios/${currentStudio._id}`, {
         method: "DELETE",
@@ -128,7 +137,10 @@ export default function StudioListingCard({
 
       if (!res.ok) {
         const errorData = await res.json().catch(() => null);
-        throw new Error(errorData?.error || "Failed to delete studio");
+        const errorMessage = typeof errorData === 'object' && errorData !== null && 'error' in errorData 
+          ? (errorData as { error: string }).error 
+          : "Failed to delete studio";
+        throw new Error(errorMessage);
       }
 
       onDeleteSuccess(currentStudio._id);
@@ -138,11 +150,12 @@ export default function StudioListingCard({
       });
 
       setIsDialogOpen(false);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error deleting studio:", error);
+      const message = error instanceof Error ? error.message : "Could not delete studio listing. Please try again.";
 
       toast.error("Delete Failed", {
-        description: error.message || "Could not delete studio listing. Please try again.",
+        description: message,
       });
     } finally {
       setDeleting(false);
@@ -222,7 +235,6 @@ export default function StudioListingCard({
               <Edit className="w-4 h-4" />
             </Link>
 
-            {/* 🔥 AlertDialogTrigger নিজেই বাটন হিসেবে কাজ করবে, কোনো ভেতরের অতিরিক্ত বাটন নেই */}
             <AlertDialog
               open={isDialogOpen}
               onOpenChange={setIsDialogOpen}
@@ -254,7 +266,7 @@ export default function StudioListingCard({
                 <AlertDialogFooter className="mt-6 flex items-center gap-3">
                   <AlertDialogCancel
                     disabled={deleting}
-                    className="w-full sm:w-auto px-5 py-2.5 bg-neutral-900 border border-neutral-800 text-neutral-300 font-semibold rounded-xl text-xs hover:bg-neutral-800 hover:text-white transition-colors mt-0 cursor-pointer"
+                    className="w-full sm:w-auto px-5 py-2.5 bg-neutral-900 border border-neutral-800 text-neutral-300 font-semibold rounded-xs hover:bg-neutral-800 hover:text-white transition-colors mt-0 cursor-pointer"
                   >
                     Cancel
                   </AlertDialogCancel>

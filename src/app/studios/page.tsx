@@ -28,11 +28,9 @@ function StudiosContent(){
   const [selectedCategory, setSelectedCategory] = useState(categoryParam || "All");
   const [priceSort, setPriceSort] = useState<"asc" | "desc" | null>(null);
 
- 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6; // Per page limit 6
 
-  
   useEffect(() => {
     if (categoryParam) {
       setSelectedCategory(categoryParam);
@@ -40,17 +38,20 @@ function StudiosContent(){
     }
   }, [categoryParam]);
 
-  
   useEffect(() => {
     const fetchStudios = async () => {
       try {
         setLoading(true);
-        const res = await fetch("http://localhost:8000/studios");
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/studios`);
         if (!res.ok) throw new Error("Failed to fetch studios");
         const data = await res.json();
-        setStudios(data);
+        
+       
+        const studiosArray = Array.isArray(data) ? data : (data.studios || data.data || []);
+        setStudios(studiosArray);
       } catch (error) {
         console.error("Error fetching studios:", error);
+        setStudios([]); 
       } finally {
         setLoading(false);
       }
@@ -61,30 +62,29 @@ function StudiosContent(){
 
   const categories = ["All", "Photo Studio", "Film Stage", "Podcast Lounge", "Music Suite", "Workshop"];
 
-  
-  const filteredStudios = studios.filter((studio) =>{
+  // 🔥 সেফটি চেক: studios যদি অ্যারে হয় তবেই কেবল filter() চলবে
+  const safeStudios = Array.isArray(studios) ? studios : [];
+
+  const filteredStudios = safeStudios.filter((studio) =>{
     const matchesSearch = 
-      studio.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      studio.location.toLowerCase().includes(searchTerm.toLowerCase());
+      (studio.title?.toLowerCase() || "").includes(searchTerm.toLowerCase()) ||
+      (studio.location?.toLowerCase() || "").includes(searchTerm.toLowerCase());
     
     const matchesCategory = selectedCategory === "All" || studio.category === selectedCategory;
 
     return matchesSearch && matchesCategory;
   });
 
-  
   const sortedStudios = [...filteredStudios].sort((a, b) => {
-    if (priceSort === "asc") return a.hourlyRate - b.hourlyRate;
-    if (priceSort === "desc") return b.hourlyRate - a.hourlyRate;
+    if (priceSort === "asc") return (a.hourlyRate || 0) - (b.hourlyRate || 0);
+    if (priceSort === "desc") return (b.hourlyRate || 0) - (a.hourlyRate || 0);
     return 0;
   });
 
-  
   useEffect(() =>{
     setCurrentPage(1);
   }, [searchTerm, selectedCategory, priceSort]);
 
-  
   const totalPages = Math.ceil(sortedStudios.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentStudios = sortedStudios.slice(startIndex, startIndex + itemsPerPage);
@@ -226,7 +226,7 @@ function StudiosContent(){
                   <div className="flex items-center justify-between text-xs text-muted-foreground">
                     <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5 text-primary" /> {studio.location}</span>
                     <span className="flex items-center gap-1 font-semibold text-foreground bg-amber-500/10 text-amber-600 px-2 py-0.5 rounded-md">
-                      <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" /> {studio.rating}
+                      <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" /> {studio.rating ?? "New"}
                     </span>
                   </div>
 

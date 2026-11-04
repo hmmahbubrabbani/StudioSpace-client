@@ -44,7 +44,7 @@ export default function Footer() {
               <li><Link href="/studios" className="hover:text-primary transition-colors">Explore Studios</Link></li>
               <li><Link href="/#how-it-works" className="hover:text-primary transition-colors">How It Works</Link></li>
               <li><Link href="/#about-us" className="hover:text-primary transition-colors">About Us</Link></li>
-              <li><Link href="/login" className="hover:text-primary transition-colors">Creator Login</Link></li>
+              <li><Link href="/signin" className="hover:text-primary transition-colors">Creator Login</Link></li>
             </ul>
           </div>
 
@@ -64,23 +64,16 @@ export default function Footer() {
           <div className="space-y-4">
             <h3 className="text-sm font-semibold text-white uppercase tracking-wider">Stay Updated</h3>
             <p className="text-xs text-neutral-400">Subscribe for new studio drops, creator tips, and exclusive discount codes.</p>
-            <form onSubmit={(e) => { e.preventDefault(); }} className="space-y-2">
-              <div className="relative">
-                <Mail className="absolute left-3 top-3 w-4 h-4 text-neutral-500" />
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="w-full bg-neutral-900 border border-neutral-800 rounded-xl pl-9 pr-4 py-2 text-sm text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-primary"
-                  required
-                />
-              </div>
-              <button
-                type="submit"
-                className="w-full flex items-center justify-center gap-2 bg-primary text-primary-foreground font-semibold py-2 rounded-xl text-sm hover:bg-primary/90 transition-all shadow-sm"
-              >
-                <Send className="w-4 h-4" /> Subscribe
-              </button>
-            </form>
+            
+              
+             
+            <Link
+            href="/signup"
+            className="w-full sm:w-auto px-8 py-2 bg-primary text-primary-foreground font-semibold rounded-xl hover:bg-primary/90 transition-all flex items-center justify-center gap-2 mt-12">
+              
+            Subscribe
+          </Link>
+            
           </div>
 
         </div>

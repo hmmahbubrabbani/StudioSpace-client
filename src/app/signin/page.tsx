@@ -83,7 +83,7 @@ export default function SignInPage() {
             <Camera className="w-6 h-6" />
           </div>
           <h1 className="text-2xl font-bold tracking-tight">Welcome Back</h1>
-          <p className="text-xs text-neutral-400">Sign in to manage your studio workspaces and bookings</p>
+          <p className="text-xs text-white-400">Sign in to manage your studio workspaces and bookings</p>
         </div>
 
        
@@ -106,7 +106,7 @@ export default function SignInPage() {
           {googleLoading ? "Connecting..." : "Continue with Google"}
         </button>
 
-        <div className="flex items-center gap-4 text-neutral-600 text-xs uppercase tracking-wider">
+        <div className="flex items-center gap-4 text-white-400 text-xs uppercase tracking-wider">
           <div className="h-px bg-neutral-800 flex-1"></div>
           <span>Or sign in with email</span>
           <div className="h-px bg-neutral-800 flex-1"></div>

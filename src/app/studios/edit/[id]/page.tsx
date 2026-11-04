@@ -45,7 +45,7 @@ function EditStudioForm() {
     const fetchStudio = async () =>{
       try {
         setLoading(true);
-        const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
+        const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
         const res = await fetch(`${baseUrl}/studios/${studioId}`);
 
         if (!res.ok) {
@@ -103,7 +103,7 @@ function EditStudioForm() {
         return;
       }
 
-      const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
+      const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
       const payload = {
         ...formData,

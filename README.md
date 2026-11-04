@@ -2,7 +2,7 @@
 
 **StudioSpace** is a modern Peer-to-Peer (P2P) marketplace web application designed for creators, photographers, videographers, and producers to discover, book, and manage professional creative studio workspaces seamlessly.
 
-* **Live site URL: 
+* **Live site URL: https://studiospace-frontend-nu.vercel.app
 
 ---
 
@@ -32,5 +32,5 @@ Follow these steps to run the client-side application locally on your machine:
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/hmmahbubrabbani/StudioSpace-client
+   git clone [https://github.com/hmmahbubrabbani/StudioSpace-client]
    cd StudioSpace-client

@@ -111,7 +111,7 @@ export default function AddStudioPage(){
       };
 
      
-      const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
+      const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
       const res = await fetch(`${baseUrl}/studios`, {
         method: "POST",
         headers: { 

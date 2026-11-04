@@ -38,7 +38,7 @@ export default function DeleteStudioDialog({
       const { data: tokenData } = await authClient.token();
       const token = tokenData?.token;
 
-      const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
+      const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
       // 🔥 ব্যাকএন্ডে DELETE রিকোয়েস্ট পাঠানোর সময় Authorization হেডার যুক্ত করা
       const res = await fetch(`${baseUrl}/studios/${studioId}`, {

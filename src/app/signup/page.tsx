@@ -140,7 +140,7 @@ export default function SignUpPage(){
           Continue with Google
         </button>
 
-        <div className="flex items-center gap-4 text-neutral-600 text-xs uppercase tracking-wider">
+        <div className="flex items-center gap-4 text-white-400 text-xs uppercase tracking-wider">
           <div className="h-px bg-neutral-800 flex-1"></div>
           <span>Or register with email</span>
           <div className="h-px bg-neutral-800 flex-1"></div>

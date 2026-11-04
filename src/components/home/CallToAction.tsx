@@ -22,7 +22,7 @@ export default function CallToAction() {
             Explore Studios <ArrowRight className="w-4 h-4" />
           </Link>
           <Link
-            href="/register"
+            href="/signup"
             className="w-full sm:w-auto px-8 py-3.5 border border-border bg-card text-foreground font-semibold rounded-xl hover:bg-muted transition-all flex items-center justify-center gap-2"
           >
             Create Free Account

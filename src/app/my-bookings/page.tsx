@@ -35,7 +35,7 @@ export default function MyBookingsPage(){
         const { data: tokenData } = await authClient.token();
         const token = tokenData?.token;
 
-        const res = await fetch(`http://localhost:8000/bookings?creatorEmail=${user.email}`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/bookings?creatorEmail=${user.email}`, {
           headers: {
             "Authorization": `Bearer ${token}`
           }

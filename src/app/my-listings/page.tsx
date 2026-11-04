@@ -33,7 +33,7 @@ export default function MyListingsPage(){
       try {
         setLoading(true);
        
-        const res = await fetch(`http://localhost:8000/studios?hostEmail=${user.email}`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/studios?hostEmail=${user.email}`);
         if (!res.ok) throw new Error("Failed to fetch listings");
         const data = await res.json();
         setListings(data);

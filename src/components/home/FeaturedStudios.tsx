@@ -2,26 +2,32 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ArrowRight, Star, MapPin, Loader2 } from "lucide-react";
 import { Studio } from "@/types";
+import { authClient } from "@/lib/auth-client";
 
 export default function FeaturedStudios() {
+  const router = useRouter();
+  
+  // 🔥 isPending বা loading স্টেটটি এখানে বের করে নেওয়া হলো
+  const { data: session, isPending } = authClient.useSession();
+  const user = session?.user;
+
   const [featuredStudios, setFeaturedStudios] = useState<Studio[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchFeatured = async () =>{
+    const fetchFeatured = async () => {
       try {
         setLoading(true);
         
-       
-        const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
+        const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
         const res = await fetch(`${baseUrl}/studios`);
         
         if (!res.ok) throw new Error("Failed to fetch studios");
         
         const data = await res.json();
-        
         
         if (Array.isArray(data)){
           setFeaturedStudios(data.slice(0, 6));
@@ -37,6 +43,19 @@ export default function FeaturedStudios() {
 
     fetchFeatured();
   }, []);
+
+  const handleViewDetails = (studioId: string) => {
+    // সেশন চেক এখনো প্রসেস হতে থাকলে একটু অপেক্ষা করতে বলতে পারেন বা রিডাইরেক্ট করতে পারেন
+    if (isPending) return;
+
+    if (!user) {
+      // ইউজার লগইন করা না থাকলে সোজা সাইন-ইন পেজে পাঠাবে
+      router.push("/signin");
+    } else {
+      // লগইন করা থাকলে ডিটেইলস পেজে পাঠাবে
+      router.push(`/studios/${studioId}`);
+    }
+  };
 
   return (
     <section className="py-20 bg-muted/40 border-y border-border">
@@ -80,7 +99,7 @@ export default function FeaturedStudios() {
                   <div className="flex items-center justify-between text-xs text-muted-foreground">
                     <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5 text-primary" /> {studio.location}</span>
                     <span className="flex items-center gap-1 font-semibold text-foreground bg-amber-500/10 text-amber-600 px-2 py-0.5 rounded-md">
-                      <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" /> {studio.rating}
+                      <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" /> {studio.rating ?? "New"}
                     </span>
                   </div>
 
@@ -93,12 +112,15 @@ export default function FeaturedStudios() {
                       <span className="text-2xl font-extrabold text-foreground">${studio.hourlyRate}</span>
                       <span className="text-xs text-muted-foreground"> / hr</span>
                     </div>
-                    <Link
-                      href={`/studios/${studio._id}`}
-                      className="px-4 py-2 bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground font-semibold rounded-xl text-sm transition-all"
+                    
+                    {/* 🔥 Link এর পরিবর্তে নিশ্চিত বাটন ব্যবহার করা হলো */}
+                    <button
+                      onClick={() => handleViewDetails(studio._id)}
+                      disabled={isPending}
+                      className="px-4 py-2 bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground font-semibold rounded-xl text-sm transition-all cursor-pointer disabled:opacity-50"
                     >
-                      View Details
-                    </Link>
+                      {isPending ? "Checking..." : "View Details"}
+                    </button>
                   </div>
                 </div>
               </div>

@@ -46,7 +46,7 @@ function StudioDetailsContent(){
     const fetchStudio = async () => {
       try {
         setFetching(true);
-        const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
+        const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
         const res = await fetch(`${baseUrl}/studios/${studioId}`);
         if (!res.ok) throw new Error("Failed to fetch studio details");
         const data = await res.json();
@@ -120,7 +120,7 @@ function StudioDetailsContent(){
         createdAt: new Date(),
       };
 
-      const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
+      const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
       
      
       const res = await fetch(`${baseUrl}/bookings`, {
@@ -191,7 +191,7 @@ function StudioDetailsContent(){
       </div>
 
       {/* Dynamic Studio Image */}
-      <div className="rounded-3xl overflow-hidden shadow-2xl border border-neutral-800 aspect-[16/9] max-h-[500px] w-full bg-neutral-900">
+      <div className="rounded-3xl overflow-hidden shadow-2xl border border-neutral-800 aspect-[16/9] max-h-[400px] w-full bg-neutral-900">
         <img 
           src={studio.image} 
           alt={studio.title} 
