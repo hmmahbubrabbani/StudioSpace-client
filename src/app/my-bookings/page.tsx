@@ -7,14 +7,14 @@ import {
   Search, 
   Loader2
 } from "lucide-react";
-import { toast } from "sonner"; // 🔥 sonner থেকে toast ইম্পোর্ট করা হলো
+import { toast } from "sonner"; 
 import { Booking } from "@/types";
 import BookingCard from "@/components/studio/BookingCard";
-import { authClient } from "@/lib/auth-client"; // Better Auth client ইম্পোর্ট
+import { authClient } from "@/lib/auth-client";
 
-export default function MyBookingsPage() {
+export default function MyBookingsPage(){
   
-  // Better Auth থেকে রিয়েল-টাইম সেশন ফেচ করা
+  
   const { data: session, isPending: sessionLoading } = authClient.useSession();
   const user = session?.user;
 
@@ -22,13 +22,13 @@ export default function MyBookingsPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // ইউজার লগইন না করা থাকলে ফেচ করার প্রয়োজন নেই
+   
     if (!user?.email) {
       setLoading(false);
       return;
     }
 
-    const fetchBookings = async () => {
+    const fetchBookings = async () =>{
       try {
         setLoading(true);
 
@@ -61,8 +61,7 @@ export default function MyBookingsPage() {
     fetchBookings();
   }, [user?.email]);
 
-  // সেশন লোড হওয়ার সময় লোডিং স্পিনার দেখানো
-  if (sessionLoading) {
+   if (sessionLoading) {
     return (
       <div className="flex flex-col items-center justify-center py-28 space-y-4 text-white">
         <Loader2 className="w-10 h-10 text-primary animate-spin" />
@@ -71,8 +70,7 @@ export default function MyBookingsPage() {
     );
   }
 
-  // ইউজার লগইন করা না থাকলে সাইনইন করার নোটিশ বা প্রম্পট দেখানো
-  if (!user) {
+    if (!user) {
     return (
       <div className="bg-card border border-border rounded-3xl p-16 text-center space-y-6 max-w-lg mx-auto my-20 shadow-sm text-white">
         <div className="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mx-auto">
@@ -97,7 +95,7 @@ export default function MyBookingsPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-10 text-white">
       
-      {/* Page Header */}
+     
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-border pb-6">
         <div className="space-y-2">
           <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-semibold">
@@ -119,7 +117,7 @@ export default function MyBookingsPage() {
         </Link>
       </div>
 
-      {/* Loading State */}
+      
       {loading ? (
         <div className="flex flex-col items-center justify-center py-24 space-y-4">
           <Loader2 className="w-10 h-10 text-primary animate-spin" />
@@ -131,14 +129,14 @@ export default function MyBookingsPage() {
             <BookingCard 
               key={booking._id} 
               booking={booking} 
-              onCancelSuccess={(id) => {
+              onCancelSuccess={(id) =>{
                 setBookings((prev) => prev.filter((b) => b._id !== id));
               }}
             />
           ))}
         </div>
       ) : (
-        /* Empty State */
+       
         <div className="bg-card border border-border rounded-3xl p-16 text-center space-y-6 max-w-lg mx-auto shadow-sm">
           <div className="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mx-auto">
             <BookmarkCheck className="w-8 h-8" />
