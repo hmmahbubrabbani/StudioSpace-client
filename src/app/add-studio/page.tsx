@@ -13,20 +13,20 @@ import {
   FileText,
   Loader2 
 } from "lucide-react";
-import { toast } from "sonner"; // 🔥 sonner থেকে toast ইম্পোর্ট করা হলো
+import { toast } from "sonner"; 
 import { Studio } from "@/types";
-import { authClient } from "@/lib/auth-client"; // Better Auth client ইম্পোর্ট
+import { authClient } from "@/lib/auth-client";
 
-export default function AddStudioPage() {
+export default function AddStudioPage(){
   const router = useRouter();
 
-  // Better Auth থেকে রিয়েল-টাইম সেশন ফেচ করা
+  
   const { data: session, isPending: sessionLoading } = authClient.useSession();
   const user = session?.user;
 
   const [loading, setLoading] = useState(false);
 
-  // State typed to align with the Studio creation payload structure
+ 
   const [formData, setFormData] = useState({
     title: "",
     category: "Photo Studio" as Studio["category"],
@@ -56,14 +56,14 @@ export default function AddStudioPage() {
     setFormData((prev) => {
       const exists = prev.amenities.includes(amenity);
       if (exists) {
-        return { ...prev, amenities: prev.amenities.filter((a) => a !== amenity) };
+        return { ...prev, amenities: prev.amenities.filter((a) => a !== amenity)};
       } else {
-        return { ...prev, amenities: [...prev.amenities, amenity] };
+        return { ...prev, amenities: [...prev.amenities, amenity]};
       }
     });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) =>{
     e.preventDefault();
     setLoading(true);
 
@@ -76,7 +76,7 @@ export default function AddStudioPage() {
     }
 
     try {
-      // ১. authClient থেকে সিক্রেট টোকেন ফেচ করা
+      
       const { data: tokenData } = await authClient.token();
       const token = tokenData?.token;
 
@@ -88,7 +88,7 @@ export default function AddStudioPage() {
         return;
       }
 
-      // Payload structured and typed using Studio interface definitions
+      
       const payload: Omit<Studio, "_id"> = {
         title: formData.title,
         category: formData.category,
@@ -110,20 +110,20 @@ export default function AddStudioPage() {
         createdAt: new Date(),
       };
 
-      // ২. ব্যাকএন্ডে টোকেনসহ রিকোয়েস্ট পাঠানো
+     
       const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
       const res = await fetch(`${baseUrl}/studios`, {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}` // টোকেন পাস করা হলো
+          "Authorization": `Bearer ${token}` 
         },
         body: JSON.stringify(payload),
       });
 
       const result = await res.json();
 
-      if (!res.ok) {
+      if (!res.ok){
         throw new Error(result.error || "Failed to create listing on server");
       }
 
@@ -132,7 +132,7 @@ export default function AddStudioPage() {
       });
 
       router.push("/my-listings");
-    } catch (error: any) {
+    } catch (error: any){
       console.error(error);
       toast.error("Error Creating Listing", {
         description: error.message || "Could not connect to server. Please ensure your backend is running.",
@@ -142,7 +142,7 @@ export default function AddStudioPage() {
     }
   };
 
-  if (sessionLoading) {
+  if (sessionLoading){
     return (
       <div className="flex flex-col items-center justify-center py-28 space-y-4 text-white">
         <Loader2 className="w-10 h-10 text-primary animate-spin" />
@@ -151,7 +151,7 @@ export default function AddStudioPage() {
     );
   }
 
-  if (!user) {
+  if (!user){
     return (
       <div className="bg-card border border-border rounded-3xl p-16 text-center space-y-6 max-w-lg mx-auto my-20 shadow-sm text-white">
         <div className="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mx-auto">
@@ -243,7 +243,7 @@ export default function AddStudioPage() {
           </div>
         </div>
 
-        {/* Section 2: Pricing & Capacity */}
+       
         <div className="space-y-4 pt-6 border-t border-border">
           <h2 className="text-lg font-bold text-foreground flex items-center gap-2">
             <DollarSign className="w-5 h-5 text-primary" /> Rates & Capacity
@@ -293,7 +293,7 @@ export default function AddStudioPage() {
           </div>
         </div>
 
-        {/* Section 3: Media & Imagery */}
+        
         <div className="space-y-4 pt-6 border-t border-border">
           <h2 className="text-lg font-bold text-foreground flex items-center gap-2">
             <ImageIcon className="w-5 h-5 text-primary" /> Studio Image URL
@@ -312,7 +312,7 @@ export default function AddStudioPage() {
           </div>
         </div>
 
-        {/* Section 4: Amenities List */}
+       
         <div className="space-y-4 pt-6 border-t border-border">
           <h2 className="text-lg font-bold text-foreground">Included Amenities</h2>
           <p className="text-xs text-muted-foreground">Select all equipment and features available at your studio.</p>
