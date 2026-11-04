@@ -15,32 +15,32 @@ import {
   Loader2,
   Edit
 } from "lucide-react";
-import { toast } from "sonner"; // 🔥 sonner থেকে toast ইম্পোর্ট করা হলো
+import { toast } from "sonner"; 
 import { Studio } from "@/types";
-import { authClient } from "@/lib/auth-client"; // Better Auth client ইম্পোর্ট
+import { authClient } from "@/lib/auth-client"; 
 
-function StudioDetailsContent() {
+function StudioDetailsContent(){
   const params = useParams();
   const router = useRouter();
   
   const studioId = params?.id as string;
 
-  // Better Auth থেকে রিয়েল-টাইম সেশন ফেচ করা
+ 
   const { data: session } = authClient.useSession();
   const user = session?.user;
 
   const [studio, setStudio] = useState<Studio | null>(null);
   const [fetching, setFetching] = useState(true);
 
-  // Modal State for Booking
+  
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [bookingDate, setBookingDate] = useState("");
   const [startTime, setStartTime] = useState("09:00");
   const [hours, setHours] = useState(3);
   const [loading, setLoading] = useState(false);
 
-  // Fetch specific studio data by ID from MongoDB backend
-  useEffect(() => {
+  
+  useEffect(() =>{
     if (!studioId) return;
 
     const fetchStudio = async () => {
@@ -64,7 +64,7 @@ function StudioDetailsContent() {
     fetchStudio();
   }, [studioId]);
 
-  if (fetching) {
+  if (fetching){
     return (
       <div className="min-h-[70vh] flex flex-col items-center justify-center space-y-4">
         <Loader2 className="w-10 h-10 text-primary animate-spin" />
@@ -73,7 +73,7 @@ function StudioDetailsContent() {
     );
   }
 
-  if (!studio) {
+  if (!studio){
     return (
       <div className="max-w-7xl mx-auto px-4 py-24 text-center space-y-6">
         <h2 className="text-2xl font-bold text-white">Studio Not Found</h2>
@@ -91,7 +91,7 @@ function StudioDetailsContent() {
   const handleBookingSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // ইউজার লগইন করা না থাকলে সাইনইন পেজে রিডাইরেক্ট করা
+   
     if (!user) {
       toast.error("Sign In Required", {
         description: "Please sign in to your account to book a studio session.",
@@ -103,7 +103,7 @@ function StudioDetailsContent() {
     setLoading(true);
 
     try {
-      // 🔥 Better Auth থেকে টোকেন সংগ্রহ করা
+      
       const { data: tokenData } = await authClient.token();
       const token = tokenData?.token;
 
@@ -122,12 +122,12 @@ function StudioDetailsContent() {
 
       const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
       
-      // 🔥 ব্যাকএন্ডে রিকোয়েস্ট পাঠানোর সময় Authorization হেডার যুক্ত করা
+     
       const res = await fetch(`${baseUrl}/bookings`, {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}` // এই হেডারটি ব্যাকএন্ডের verifyToken পাশ করতে সাহায্য করবে
+          "Authorization": `Bearer ${token}` 
         },
         body: JSON.stringify(bookingPayload),
       });
@@ -137,7 +137,7 @@ function StudioDetailsContent() {
         throw new Error(errorData?.error || "Failed to create booking");
       }
 
-      toast.success("Booking Confirmed! 🎉", {
+      toast.success("Booking Confirmed! ", {
         description: `Successfully reserved ${studio.title} for ${hours} hours.`,
       });
 
@@ -145,7 +145,7 @@ function StudioDetailsContent() {
       router.push("/my-bookings");
     } catch (error: any) {
       console.error("Booking error:", error);
-      toast.error("Booking Failed", {
+      toast.error("Booking Failed",{
         description: error.message || "Could not complete your reservation. Please try again.",
       });
     } finally {
@@ -156,7 +156,7 @@ function StudioDetailsContent() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10 text-white">
       
-      {/* Top Header with Back & Edit Buttons */}
+    
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-neutral-800 pb-6">
         <div className="space-y-2">
           <div className="flex flex-wrap items-center gap-3">
